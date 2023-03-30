@@ -15,12 +15,12 @@ def main():
     parser.add_argument('path', help='путь до картинок')
     args = parser.parse_args()
 
-    TELEGRAM_TOKEN = env('TELEGRAM_TOKEN')
-    SLEEP_SEC = env.int('SLEEP_SEC', default=14400)
-    CHAT_ID=env('CHAT_ID')
+    telegram_token = env('TELEGRAM_TOKEN')
+    telegram_sleep_sec = env.int('TELEGRAM_SLEEP_SECONDS', default=14400)
+    telegram_chat_id=env('TELEGRAM_CHAT_ID')
 
     try:
-        bot = telegram.Bot(token=TELEGRAM_TOKEN)
+        bot = telegram.Bot(token=telegram_token)
         if args.mode == 'images' and os.path.isdir(args.path):
             print('Парсим директорию...')
             images_paths = [os.path.join(path, name) for path, _, names in os.walk(args.path) for name in names]
@@ -29,16 +29,16 @@ def main():
                 for image_path in images_paths:
                     print(f'Отправляем {image_path}...')
                     with open(image_path, 'rb') as photo:
-                        bot.sendPhoto(chat_id=CHAT_ID, photo=photo)
-                    print(f'Отправили. Ожидание {SLEEP_SEC} секунд...')
-                    time.sleep(SLEEP_SEC)
+                        bot.sendPhoto(chat_id=telegram_chat_id, photo=photo)
+                    print(f'Отправили. Ожидание {telegram_sleep_sec} секунд...')
+                    time.sleep(telegram_sleep_sec)
                 print('Картинки закончились. Перемешиваем...')    
                 random.shuffle(images_paths)
                 print('Перемешали.')
         elif args.mode == 'image' and os.path.isfile(args.path):
             print(f'Отправляем {args.path}...')
             with open(args.path, 'rb') as photo:
-                bot.sendPhoto(chat_id=CHAT_ID, photo=photo)
+                bot.sendPhoto(chat_id=telegram_chat_id, photo=photo)
             print('Отправили.')
         else:
             print('Неверный ввод.')

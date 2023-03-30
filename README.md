@@ -14,8 +14,8 @@ pip install -r requirements.txt
 - NASA_TOKEN=DEMO_KEY
 #### Для `telegram_poster.py`
 - TELEGRAM_TOKEN
-- CHAT_ID
-- SLEEP_SEC=14400
+- TELEGRAM_CHAT_ID
+- TELEGRAM_SLEEP_SECONDS=14400
 
 1. Поместите файл `.env` рядом со скриптами.
 2. `.env` содержит текстовые данные без кавычек.
@@ -26,8 +26,8 @@ pip install -r requirements.txt
 $ cat .env
 NASA_TOKEN=DEMO_KEY
 TELEGRAM_TOKEN=1111111111:qweasdASCAEr235tgdfESFSFd
-CHAT_ID=@channel_name
-SLEEP_SEC=14400
+TELEGRAM_CHAT_ID=@channel_name
+TELEGRAM_SLEEP_SECONDS=14400
 ```
 
 #### Как получить `NASA_TOKEN`
@@ -36,10 +36,10 @@ SLEEP_SEC=14400
 #### Как получить `TELEGRAM_TOKEN`
 Создать своего телеграм бота с помощью [@BotFather](https://telegram.me/BotFather). Он выдаст токен.
 
-#### Как получить `CHAT_ID`
-CHAT_ID это ссылка на телеграм канал, например: @telegram
+#### Как получить `TELEGRAM_CHAT_ID`
+TELEGRAM_CHAT_ID это ссылка на телеграм канал, например: @telegram
 
-#### Как получить `SLEEP_SEC`
+#### Как получить `TELEGRAM_SLEEP_SECONDS`
 Установите время ожидания в секундах между постами.
 
 ## Как запустить

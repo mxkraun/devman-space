@@ -14,25 +14,25 @@ def main():
     parser.add_argument('-p', '--path', help='путь для сохранения картинок', default='images')
     args = parser.parse_args()
 
-    NASA_TOKEN = env('NASA_TOKEN', default='DEMO_KEY')
+    nasa_token = env('NASA_TOKEN', default='DEMO_KEY')
     params = {
-        'api_key': NASA_TOKEN,
+        'api_key': nasa_token,
     } 
 
-    mydate = datetime.strptime(args.date, '%d-%m-%Y')
-    day, month, year = mydate.day, mydate.month, mydate.year
+    target_date = datetime.strptime(args.date, '%d-%m-%Y')
+    day, month, year = target_date.day, target_date.month, target_date.year
 
     try:
         print('Подключаемся...')
         response = requests.get(f'https://epic.gsfc.nasa.gov/api/natural/date/{year}-{month:02}-{day:02}', params=params)
         response.raise_for_status()
-        response_data = response.json()
+        images = response.json()
         print('Подключились.')
-        if not response_data:
+        if not images:
             print('Нет картинок за этот день.')
-        for index, data in enumerate(response_data):
+        for index, image in enumerate(images):
             print(f'Скачиваем картинку № {index}...')
-            image_name = data['image']
+            image_name = image['image']
             url = f'https://api.nasa.gov/EPIC/archive/natural/{year}/{month:02}/{day:02}/png/{image_name}.png'
             images_downloader.download_image(url, args.path, f'nasa_epic_{index}', params)
             print(f'Картинка № {index} скачана.')

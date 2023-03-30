@@ -13,9 +13,9 @@ def main():
     parser.add_argument('-p', '--path', help='путь для сохранения картинок', default='images')
     args = parser.parse_args()
 
-    NASA_TOKEN = env('NASA_TOKEN', default='DEMO_KEY')
+    nasa_token = env('NASA_TOKEN', default='DEMO_KEY')
     params = {
-        'api_key': NASA_TOKEN,
+        'api_key': nasa_token,
         'thumbs': 'True',
         'count': args.amount
     }
@@ -24,14 +24,14 @@ def main():
         print('Подключаемся...')
         response = requests.get('https://api.nasa.gov/planetary/apod', params=params)
         response.raise_for_status()
-        response_data = response.json()
+        images = response.json()
         print('Подключились.')
-        for index, data in enumerate(response_data):
+        for index, image in enumerate(images):
             print(f'Скачиваем картинку № {index}...')
-            if data['media_type'] == 'image':
-                images_downloader.download_image(data['url'], args.path, f'nasa_apod_{index}')
-            elif data['media_type'] == 'video':
-                images_downloader.download_image(data['thumbnail_url'], args.path, f'nasa_apod_{index}')
+            if image['media_type'] == 'image':
+                images_downloader.download_image(image['url'], args.path, f'nasa_apod_{index}')
+            elif image['media_type'] == 'video':
+                images_downloader.download_image(image['thumbnail_url'], args.path, f'nasa_apod_{index}')
             print(f'Картинка № {index} скачана.')
     except requests.exceptions.HTTPError:
         print('Неверное количество.')
